@@ -104,15 +104,17 @@ echo "dn: dc=nti310,dc=local
 dc: nti310
 objectClass: top
 objectClass: domain
+
 dn: cn=ldapadm ,dc=nti310,dc=local
 objectClass: organizationalRole
 cn: ldapadm
 description: LDAP Manager
+
 dn: ou=People,dc=nti310,dc=local
 objectClass: organizationalUnit
 ou: People
+
 dn: ou=Group,dc=nti310,dc=local
 objectClass: organizationalUnit
 ou: Group" > base.ldif
-
 ldapadd -x -W -D "cn=ldapadm,dc=nti310,dc=local" -f base.ldif -y /root/ldap_admin_pass
