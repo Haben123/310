@@ -44,10 +44,12 @@ echo "dn: olcDatabase={2}hdb,cn=config
 changetype: modify
 replace: olcSuffix
 olcSuffix: dc=nti310,dc=local
+
 dn: olcDatabase={2}hdb,cn=config
 changetype: modify
 replace: olcRootDN
 olcRootDN: cn=ldapadm,dc=nti310,dc=local
+
 dn: olcDatabase={2}hdb,cn=config
 changetype: modify
 replace: olcRootPW
@@ -77,6 +79,7 @@ echo "dn: cn=config
 changetype: modify
 replace: olcTLSCertificateFile
 olcTLSCertificateFile: /etc/openldap/certs/nti310ldapcert.pem
+
 dn: cn=config
 changetype: modify
 replace: olcTLSCertificateKeyFile
