@@ -1,0 +1,9 @@
+#!/bin/bash
+yum install -y phpPgAdmin
+
+setenforce 0 /etc/httpd/conf.d/phpPgAdmin.conf change "Require local" to "Requi
+re all granted" and Allow from localhost to "Allow from all"
+sed -i $conf['extra_login_security'] = false; /etc/phpPgAdmin/config.inc.php
+
+systemctl enable httpd
+systemctl start httpd
