@@ -1,0 +1,4 @@
+#!/bin/bash
+yum install -y python-pip 
+ pip install -y vertualenv
+    5  pip install -y --upgrade pip
