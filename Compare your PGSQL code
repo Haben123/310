@@ -16,3 +16,27 @@ systemctl enable httpd
 systemctl start httpd
 
 
+
+
+#Fernando's script were same as mine I didn't had any problem running his code. this was his script.
+
+#!/bin/bash
+
+yum -y install epel-release
+sudo yum -y install python-pip python-devel gcc postgresql-server postgresql-devel postgresql-contrib
+sudo postgresql-setup initdb
+sudo systemctl enable postgresql
+sudo systemctl start postgresql
+cp /var/lib/pgsql/data/pg_hba.conf /var/lib/pgsql/data/pg_hba.conf.bak
+sed -i 's/ident/md5/g' /var/lib/pgsql/data/pg_hba.conf
+
+echo "CREATE USER myprojectuser WITH PASSWORD 'password';
+ALTER ROLE myprojectuser SET client_encoding TO 'utf8';
+ALTER ROLE myprojectuser SET default_transaction_isolation TO 'read committed';
+ALTER ROLE myprojectuser SET timezone TO 'UTC';
+GRANT ALL PRIVILEGES ON DATABASE myproject TO myprojectuser;" > /tmp/sql.sql
+sudo -i -u postgres psql -U postgres -f sql.sql
+systemctl restart postgres
+systemctl restart postgresql
+systemctl status postgresql
+
