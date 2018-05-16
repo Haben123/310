@@ -1,9 +1,18 @@
 #!/bin/bash
-yum install -y phpPgAdmin
+yum -y install phpPgAdmin
 
 setenforce 0
-vim/etc/httpd/conf.d/phpPgAdmin.conf change "Require local" to "Require all granted" and Allow from localhost to "Allow from all"
-sed -i $conf['extra_login_security'] = false; /etc/phpPgAdmin/config.inc.php
 
+sed -i 's/Require local/Require all granted/g' /etc/httpd/conf.d/phpPgAdmin.conf
+
+sed -i '/extra_login_security/ s/true/false/g' /etc/phpPgAdmin/config.inc.php
+
+sudo -i -u postgres psql -U postgres -d template1 -c "ALTER USER postgres WITH PASSWORD 'postgres';"
+
+sed -i '/^local/ s/peer/md5/g' /var/lib/pgsql/data/pg_hba.conf    #change peer to md5
+
+service postgresql restart
 systemctl enable httpd
 systemctl start httpd
+
+
