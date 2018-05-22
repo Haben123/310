@@ -1,0 +1,75 @@
+#!/bin/bash
+sudo yum install -y epel-release
+sudo yum install -y python-pip python-devel gcc postgresql-server postgresql-devel postgresql-contrib
+
+sudo postgresql-setup initdb
+sudo systemctl enable postgresql
+sudo systemctl start postgresql
+
+cp /var/lib/pgsql/data/pg_hba.conf /var/lib/pgsql/data/pg_hba.conf.bak
+
+sed -i 's/ident/md5/g' /var/lib/pgsql/data/pg_hba.conf
+
+sudo systemctl restart postgresql
+sudo systemctl enable postgresql
+
+sudo su - postgres
+psql
+
+sudo yum -y install wget
+
+sudo -i -u postgres psql -U postgres -f sqlfile.sql
+
+#!/bin/bash
+yum -y install pip
+yum -y install python-pip
+yum install -y pip install virtualenv
+yum -y pip install --upgrade pip
+
+mkdir /opt/myproject
+cd /opt/myproject/
+
+pip install virtualenv
+virtualenv myprojectenv
+source myprojectenv/bin/activate
+
+pip install django psycopg2
+django-admin.py startproject myproject .
+
+yum -y install tree
+
+cd myproject/
+
+vim settings.py    
+. . .
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+
+. . .
+
+
+. . .
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'myproject',
+        'USER': 'myprojectuser',
+        'PASSWORD': 'password',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+}
+. . .
+
+cd ~/myproject
+python manage.py makemigrations
+python manage.py migrate
+source myprojectenv/bin/activate
+python manage.py createsuperuser
+python manage.py runserver 0.0.0.0:8000
+http://server_domain_or_IP:8000
