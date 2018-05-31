@@ -1,0 +1,4 @@
+git clone https://github.com/Haben123/310.git
+ ldapip=$( gcloud compute instances create ldap3 --zone us-east1-b --metadata-from-file startup-script=310/LDAP\ server ) 
+ ldapinternal=$(echo $ldapip | awk '{print $11}')
+ 
