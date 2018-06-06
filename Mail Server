@@ -1,0 +1,13 @@
+#!/bin/bash
+yum -y install exim mailx
+mkdir /root/SSL/mail.mydomain.com -p
+cd /root/SSL/mail.mydomain.com
+openssl req -nodes -x509 -newkey rsa:2048 -keyout mail.mydomain.com.key -out m
+ail.mydomain.com.crt -days 365
+cp mail.mydomain.com.key mail.mydomain.com.crt /etc/ssl/
+cp /etc/exim/exim.conf{,.orig}
+vim /etc/exim/exim.conf
+systemctl start exim
+systemctl status exim
+echo "test" | /usr/sbin/exim -v nicolebade@mydomain.com
+/var/log/exim/main.log
