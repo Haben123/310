@@ -1,0 +1,13 @@
+git clone https://github.com/Haben123/310.git
+ls -l 310
+ ldapip=$( gcloud compute instances create ldap3 --zone us-east1-b --metadata-from-file startup-script=310/LDAP\ server ) 
+ ldapinternal=$(echo $ldapip | awk '{print $11}')
+ ls -l 310 
+ postgreaip=$( gcloud compute instances create postgrea1 --zone us-east1-b --metadata-from-file startup-script=310/postgrea\  ) 
+postgreainternal=$(echo $postgreaip | awk '{print $11}')
+ ls -l 310
+ ldapip=$( gcloud compute instances create ldap3 --zone us-east1-b --metadata-from-file startup-script=310/LDAP\ server ) 
+ 
+ 
+ 
+ #I was only able to creat instance based on the working/exicting one but i was not able to get on the internal ip. I will to your office before class.
